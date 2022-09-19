@@ -107,7 +107,14 @@ impl Service<KafkaRequest> for KafkaService {
                         event_byte_size: request.event_byte_size,
                     })
                 }
-                Err((kafka_err, _original_record)) => Err(kafka_err),
+                Err((kafka_err, _original_record)) => match kafka_err {
+                    KafkaError::MessageProduction(rdkafka::types::RDKafkaErrorCode::Fatal) => {
+                        let (_, error_description) = this.kafka_producer.client()
+                        .fatal_error().unwrap_or((rdkafka::types::RDKafkaErrorCode::Fatal, String::new()));
+                        panic!("Unrecoverable error in Kafka sink: {}, {}", kafka_err, error_description)
+                    }
+                    _ => Err(kafka_err),
+                },
             }
         })
     }
