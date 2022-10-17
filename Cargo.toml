@@ -1,6 +1,6 @@
 [package]
 name = "vector"
-version = "0.24.1-deeplay"
+version = "0.24.1"
 authors = ["Vector Contributors <vector@datadoghq.com>"]
 edition = "2021"
 description = "A lightweight and ultra-fast tool for building observability pipelines"
@@ -278,7 +278,7 @@ postgres-openssl = { version = "0.5.0", default-features = false, features = ["r
 pulsar = { version = "4.1.2", default-features = false, features = ["tokio-runtime", "auth-oauth2"], optional = true }
 rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
 rand_distr = { version = "0.4.3", default-features = false }
-rdkafka = { version = "0.28.0", default-features = false, features = ["tokio", "libz", "ssl", "zstd"], optional = true }
+rdkafka = { git = "https://github.com/Ilmarii/rust-rdkafka.git", branch = "v0.28.0-enable-scram-windows", default-features = false, features = ["tokio", "libz", "ssl", "zstd"], optional = true }
 redis = { version = "0.21.5", default-features = false, features = ["connection-manager", "tokio-comp", "tokio-native-tls-comp"], optional = true }
 regex = { version = "1.6.0", default-features = false, features = ["std", "perf"] }
 roaring = { version = "0.9.0", default-features = false, optional = true }
@@ -368,7 +368,7 @@ default = ["api", "api-client", "enrichment-tables", "sinks", "sources", "source
 default-cmake = ["api", "api-client", "enrichment-tables", "rdkafka?/cmake_build", "sinks", "sources", "sources-dnstap", "transforms", "unix", "rdkafka?/gssapi-vendored", "vrl-cli", "enterprise"]
 # Default features for *-pc-windows-msvc
 # TODO: Enable SASL https://github.com/vectordotdev/vector/pull/3081#issuecomment-659298042
-default-msvc = ["api", "api-client", "enrichment-tables", "rdkafka?/cmake_build", "sinks", "sources", "transforms", "vrl-cli", "enterprise"]
+default-msvc = ["api", "api-client", "enrichment-tables", "rdkafka?/cmake_build", "sinks", "sources", "transforms", "rdkafka?/scram-vendored", "vrl-cli", "enterprise"]
 default-musl = ["api", "api-client", "enrichment-tables", "rdkafka?/cmake_build", "sinks", "sources", "sources-dnstap", "transforms", "unix", "rdkafka?/gssapi-vendored", "vrl-cli", "enterprise"]
 default-no-api-client = ["api", "enrichment-tables", "sinks", "sources", "sources-dnstap", "transforms", "unix", "rdkafka?/gssapi-vendored", "vrl-cli", "enterprise"]
 default-no-vrl-cli = ["api", "sinks", "sources", "sources-dnstap", "transforms", "unix", "rdkafka?/gssapi-vendored", "enterprise"]
