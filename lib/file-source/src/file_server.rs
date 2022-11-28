@@ -221,6 +221,11 @@ where
                             }
                         } else {
                             // untracked file fingerprint
+                            info!(
+                                message = "Receive untracked path.",
+                                path = ?path,
+                                file_id = ?file_id,
+                            );
                             self.watch_new_file(path, file_id, &mut fp_map, &checkpoints, false);
                             self.emitter.emit_files_open(fp_map.len());
                         }
